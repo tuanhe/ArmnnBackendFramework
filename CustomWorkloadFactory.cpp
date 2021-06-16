@@ -8,7 +8,7 @@
 #include "workloads/CustomAdditionWorkload.hpp"
 #include "workloads/CustomPreCompiledWorkload.hpp"
 
-#include <backendsCommon/CpuTensorHandle.hpp>
+#include <backendsCommon/TensorHandle.hpp>
 #include <backendsCommon/MemCopyWorkload.hpp>
 
 #include <Layer.hpp>
@@ -43,13 +43,13 @@ bool CustomWorkloadFactory::IsLayerSupported(const Layer& layer,
 
 std::unique_ptr<ITensorHandle> CustomWorkloadFactory::CreateTensorHandle(const TensorInfo& tensorInfo, bool) const
 {
-    return std::make_unique<ScopedCpuTensorHandle>(tensorInfo);
+    return std::make_unique<ScopedTensorHandle>(tensorInfo);
 }
 
 std::unique_ptr<ITensorHandle> CustomWorkloadFactory::CreateTensorHandle(const TensorInfo& tensorInfo,
-                                                                         DataLayout bool) const
+                                                                         DataLayout, bool) const
 {
-    return std::make_unique<ScopedCpuTensorHandle>(tensorInfo);
+    return std::make_unique<ScopedTensorHandle>(tensorInfo);
 }
 
 std::unique_ptr<IWorkload> CustomWorkloadFactory::CreateInput(const InputQueueDescriptor& descriptor,
@@ -70,7 +70,7 @@ std::unique_ptr<IWorkload> CustomWorkloadFactory::CreateInput(const InputQueueDe
                                        "data input and output differ in byte count.");
     }
 
-    return MakeWorkload<CopyMemGenericWorkload>(descriptor, info);
+    return std::make_unique<CopyMemGenericWorkload>(descriptor, info);
 }
 
 std::unique_ptr<IWorkload> CustomWorkloadFactory::CreateOutput(const OutputQueueDescriptor& descriptor,
@@ -90,19 +90,19 @@ std::unique_ptr<IWorkload> CustomWorkloadFactory::CreateOutput(const OutputQueue
                                        "data input and output differ in byte count.");
     }
 
-    return MakeWorkloadHelper<CopyMemGenericWorkload>(descriptor, info);
+    return std::make_unique<CopyMemGenericWorkload>(descriptor, info);
 }
 
 std::unique_ptr<armnn::IWorkload> CustomWorkloadFactory::CreateAddition(const AdditionQueueDescriptor& descriptor,
                                                                         const WorkloadInfo& info) const
 {
-    return MakeWorkload<CustomAdditionWorkload>(descriptor, info);
+    return std::make_unique<CustomAdditionWorkload>(descriptor, info);
 }
 
 std::unique_ptr<IWorkload> CustomWorkloadFactory::CreatePreCompiled(const PreCompiledQueueDescriptor& descriptor,
                                                                     const WorkloadInfo& info) const
 {
-    return MakeWorkload<CustomPreCompiledWorkload>(descriptor, info);
+    return std::make_unique<CustomPreCompiledWorkload>(descriptor, info);
 }
 
 } // namespace armnn

@@ -12,7 +12,7 @@
 
 #include <Profiling.hpp>
 
-#include <backendsCommon/CpuTensorHandle.hpp>
+#include <backendsCommon/TensorHandle.hpp>
 
 #include <boost/polymorphic_cast.hpp>
 

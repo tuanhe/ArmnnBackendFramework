@@ -10,8 +10,8 @@ using namespace armnn;
 const TensorInfo& GetTensorInfo(const ITensorHandle* tensorHandle)
 {
     // We know that this workloads use CpuTensorHandles only, so this cast is legitimate.
-    const ConstCpuTensorHandle* cpuTensorHandle =
-        boost::polymorphic_downcast<const ConstCpuTensorHandle*>(tensorHandle);
+    const ConstTensorHandle* cpuTensorHandle =
+        boost::polymorphic_downcast<const ConstTensorHandle*>(tensorHandle);
 
     return cpuTensorHandle->GetTensorInfo();
 }

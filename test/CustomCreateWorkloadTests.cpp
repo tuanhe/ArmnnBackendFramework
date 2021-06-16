@@ -5,7 +5,7 @@
 
 #include <test/CreateWorkload.hpp>
 
-#include <backendsCommon/CpuTensorHandle.hpp>
+#include <backendsCommon/TensorHandle.hpp>
 
 #include <custom/CustomWorkloadFactory.hpp>
 #include <custom/workloads/CustomAdditionWorkload.hpp>
@@ -23,9 +23,9 @@ void CheckInputsOutput(std::unique_ptr<Workload> workload,
                        const TensorInfo&         outputInfo)
 {
     auto queueDescriptor = workload->GetData();
-    auto inputHandle0    = boost::polymorphic_downcast<ConstCpuTensorHandle*>(queueDescriptor.m_Inputs[0]);
-    auto inputHandle1    = boost::polymorphic_downcast<ConstCpuTensorHandle*>(queueDescriptor.m_Inputs[1]);
-    auto outputHandle    = boost::polymorphic_downcast<CpuTensorHandle*>(queueDescriptor.m_Outputs[0]);
+    auto inputHandle0    = boost::polymorphic_downcast<ConstTensorHandle*>(queueDescriptor.m_Inputs[0]);
+    auto inputHandle1    = boost::polymorphic_downcast<ConstTensorHandle*>(queueDescriptor.m_Inputs[1]);
+    auto outputHandle    = boost::polymorphic_downcast<TensorHandle*>(queueDescriptor.m_Outputs[0]);
     BOOST_TEST((inputHandle0->GetTensorInfo() == inputInfo0));
     BOOST_TEST((inputHandle1->GetTensorInfo() == inputInfo1));
     BOOST_TEST((outputHandle->GetTensorInfo() == outputInfo));
@@ -106,7 +106,7 @@ void CustomCreatePreCompiledWorkloadTest()
     CreateTensorHandles(graph, factory);
 
     // Makes the workload and checks it
-    auto workload = MakeAndCheckWorkload<CustomPreCompiledWorkload>(*layer, graph, factory);
+    auto workload = MakeAndCheckWorkload<CustomPreCompiledWorkload>(*layer, factory);
 
     PreCompiledQueueDescriptor queueDescriptor = workload->GetData();
     BOOST_TEST(queueDescriptor.m_Inputs.size() == 2);

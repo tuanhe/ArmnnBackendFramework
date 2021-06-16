@@ -8,7 +8,7 @@
 #include <armnn/Tensor.hpp>
 #include <armnn/Types.hpp>
 
-#include <backendsCommon/CpuTensorHandle.hpp>
+#include <backendsCommon/TensorHandle.hpp>
 
 #include <boost/polymorphic_cast.hpp>
 
@@ -17,8 +17,8 @@ const armnn::TensorInfo& GetTensorInfo(const armnn::ITensorHandle* tensorHandle)
 template <typename DataType>
 const DataType* GetConstCpuData(const armnn::ITensorHandle* tensorHandle)
 {
-    const armnn::ConstCpuTensorHandle* cpuTensorHandle =
-        boost::polymorphic_downcast<const armnn::ConstCpuTensorHandle*>(tensorHandle);
+    const armnn::ConstTensorHandle* cpuTensorHandle =
+        boost::polymorphic_downcast<const armnn::ConstTensorHandle*>(tensorHandle);
 
     return cpuTensorHandle->GetConstTensor<DataType>();
 }
@@ -27,8 +27,8 @@ template <typename DataType>
 DataType* GetCpuData(const armnn::ITensorHandle* tensorHandle)
 {
     // We know that reference workloads use CpuTensorHandles only, so this cast is legitimate.
-    const armnn::CpuTensorHandle* cpuTensorHandle =
-            boost::polymorphic_downcast<const armnn::CpuTensorHandle*>(tensorHandle);
+    const armnn::TensorHandle* cpuTensorHandle =
+            boost::polymorphic_downcast<const armnn::TensorHandle*>(tensorHandle);
 
     return cpuTensorHandle->GetTensor<DataType>();
 }
