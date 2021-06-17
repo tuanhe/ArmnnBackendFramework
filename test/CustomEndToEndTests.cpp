@@ -46,7 +46,7 @@ void AdditionToPreCompiledTest()
     BOOST_CHECK(optimizedNet != nullptr);
 
     // Check that the addition layer has been substituted with a pre-compiled layer in the optimized graph
-	#if 0
+    #if 0
     Graph& optimizedGraph = static_cast<OptimizedNetwork*>(optimizedNet.get())->GetGraph();
     Layer* additionLayer = nullptr;
     Layer* preCompiledLayer = nullptr;

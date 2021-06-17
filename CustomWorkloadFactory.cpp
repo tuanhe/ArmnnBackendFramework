@@ -47,8 +47,11 @@ std::unique_ptr<ITensorHandle> CustomWorkloadFactory::CreateTensorHandle(const T
 }
 
 std::unique_ptr<ITensorHandle> CustomWorkloadFactory::CreateTensorHandle(const TensorInfo& tensorInfo,
-                                                                         DataLayout, bool) const
+                                                                         DataLayout dataLayout,
+						                                                 bool isMemoryManaged) const
 {
+    IgnoreUnused(dataLayout);
+    IgnoreUnused(isMemoryManaged);
     return std::make_unique<ScopedTensorHandle>(tensorInfo);
 }
 
