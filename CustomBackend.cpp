@@ -27,16 +27,6 @@ const BackendId& CustomBackend::GetIdStatic()
     return s_Id;
 }
 
-static BackendRegistry::StaticRegistryInitializer g_RegisterHelper
-{
-    BackendRegistryInstance(),
-    CustomBackend::GetIdStatic(),
-    []()
-    {
-        return IBackendInternalUniquePtr(new CustomBackend());
-    }
-};
-
 IBackendInternal::IWorkloadFactoryPtr CustomBackend::CreateWorkloadFactory(
         const IBackendInternal::IMemoryManagerSharedPtr& memoryManager) const
 {
