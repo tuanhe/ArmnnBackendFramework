@@ -48,7 +48,7 @@ std::unique_ptr<ITensorHandle> CustomWorkloadFactory::CreateTensorHandle(const T
 
 std::unique_ptr<ITensorHandle> CustomWorkloadFactory::CreateTensorHandle(const TensorInfo& tensorInfo,
                                                                          DataLayout dataLayout,
-						                                                 bool isMemoryManaged) const
+                                                                         bool isMemoryManaged) const
 {
     IgnoreUnused(dataLayout);
     IgnoreUnused(isMemoryManaged);
