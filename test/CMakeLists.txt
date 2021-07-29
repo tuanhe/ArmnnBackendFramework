@@ -3,10 +3,8 @@
 # SPDX-License-Identifier: MIT
 #
 
-list(APPEND armnnCustomBackendUnitTests_sources
-    CustomCreateWorkloadTests.cpp
-    CustomEndToEndTests.cpp
-)
+AUX_SOURCE_DIRECTORY(.    armnnCustomBackendUnitTests_source_files)
+list(APPEND armnnCustomBackendUnitTests_sources ${armnnCustomBackendUnitTests_source_files})
 
 add_library(armnnCustomBackendUnitTests OBJECT ${armnnCustomBackendUnitTests_sources})
 target_include_directories(armnnCustomBackendUnitTests PRIVATE ${PROJECT_SOURCE_DIR}/src/armnn)

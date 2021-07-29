@@ -3,18 +3,8 @@
 # SPDX-License-Identifier: MIT
 #
 
-list(APPEND armnnCustomBackend_sources
-     CustomBackend.cpp
-     CustomBackend.hpp
-     CustomBackendUtils.cpp
-     CustomBackendUtils.hpp
-     CustomLayerSupport.cpp
-     CustomLayerSupport.hpp
-     CustomPreCompiledObject.cpp
-     CustomPreCompiledObject.hpp
-     CustomWorkloadFactory.cpp
-     CustomWorkloadFactory.hpp
-)
+AUX_SOURCE_DIRECTORY(.    armnnCustomBackend_sources_files)
+list(APPEND armnnCustomBackend_sources ${armnnCustomBackend_sources_files})
 
 add_library(armnnCustomBackend OBJECT ${armnnCustomBackend_sources})
 target_include_directories(armnnCustomBackend PRIVATE ${PROJECT_SOURCE_DIR}/src/armnn)
