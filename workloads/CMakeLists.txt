@@ -2,13 +2,8 @@
 # Copyright © 2017 Arm Ltd. All rights reserved.
 # SPDX-License-Identifier: MIT
 #
-
-list(APPEND armnnCustomBackendWorkloads_sources
-        CustomAdditionWorkload.cpp
-        CustomAdditionWorkload.hpp
-        CustomPreCompiledWorkload.cpp
-        CustomPreCompiledWorkload.hpp
-)
+AUX_SOURCE_DIRECTORY(.    armnnCustomBackendWorkloads_source_files)
+list(APPEND armnnCustomBackendWorkloads_sources ${armnnCustomBackendWorkloads_source_files})
 
 add_library(armnnCustomBackendWorkloads OBJECT ${armnnCustomBackendWorkloads_sources})
 target_include_directories(armnnCustomBackendWorkloads PRIVATE ${PROJECT_SOURCE_DIR}/src/armnn)
