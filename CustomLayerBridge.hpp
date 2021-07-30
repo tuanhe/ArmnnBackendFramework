@@ -10,7 +10,6 @@
 
 #include <Layer.hpp>
 
-
 namespace armnn
 {
 

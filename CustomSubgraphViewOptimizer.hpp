@@ -14,21 +14,15 @@
 namespace armnn
 {
 
-using LayerFunctionPtr = std::function<bool(Layer*)>;
-
-class CustomLayerBridge
+class CustomSubgraphViewOptimizer
 {
     public:
-        LayerFunctionPtr GetLayerFunction(LayerType);
-        void RegisterLayer(LayerType, LayerFunctionPtr);
-        static CustomLayerBridge& GetBridge();
 
     private:
-        CustomLayerBridge()  = default;
-        ~CustomLayerBridge() = default;
+        CustomSubgraphViewOptimizer()  = default;
+        ~CustomSubgraphViewOptimizer() = default;
 
     private:
-        std::map<LayerType,LayerFunctionPtr> m_LayerMap;
 };
 
 } // namespace armnn

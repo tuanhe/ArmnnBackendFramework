@@ -1,12 +1,9 @@
 //
-// Copyright © 2017 Arm Ltd. All rights reserved.
+// Copyright © tuanhe. All rights reserved.
 // SPDX-License-Identifier: MIT
 //
 
-#pragma once
-
 #include "CustomLayerBridge.hpp"
-
 
 namespace armnn
 {
@@ -27,9 +24,7 @@ LayerFunctionPtr CustomLayerBridge::GetLayerFunction(LayerType type)
 
 void CustomLayerBridge::RegisterLayer(LayerType type, LayerFunctionPtr fn)
 {
-    m_LayerMap.insert(std::make_pair<LayerType, LayerFunctionPtr>(type, fn));
+    m_LayerMap.insert(std::pair<LayerType, LayerFunctionPtr>(type, fn));
 }
-
-
 
 } // namespace armnn
