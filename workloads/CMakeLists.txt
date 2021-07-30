@@ -2,7 +2,7 @@
 # Copyright © 2017 Arm Ltd. All rights reserved.
 # SPDX-License-Identifier: MIT
 #
-AUX_SOURCE_DIRECTORY(.    armnnCustomBackendWorkloads_source_files)
+AUX_SOURCE_DIRECTORY(. armnnCustomBackendWorkloads_source_files)
 list(APPEND armnnCustomBackendWorkloads_sources ${armnnCustomBackendWorkloads_source_files})
 
 add_library(armnnCustomBackendWorkloads OBJECT ${armnnCustomBackendWorkloads_sources})

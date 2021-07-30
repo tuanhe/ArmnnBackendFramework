@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 #
 
-AUX_SOURCE_DIRECTORY(.    armnnCustomBackend_sources_files)
+AUX_SOURCE_DIRECTORY(. armnnCustomBackend_sources_files)
 list(APPEND armnnCustomBackend_sources ${armnnCustomBackend_sources_files})
 
 add_library(armnnCustomBackend OBJECT ${armnnCustomBackend_sources})

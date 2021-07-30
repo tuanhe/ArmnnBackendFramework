@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 #
 
-AUX_SOURCE_DIRECTORY(.    armnnCustomBackendUnitTests_source_files)
+AUX_SOURCE_DIRECTORY(. armnnCustomBackendUnitTests_source_files)
 list(APPEND armnnCustomBackendUnitTests_sources ${armnnCustomBackendUnitTests_source_files})
 
 add_library(armnnCustomBackendUnitTests OBJECT ${armnnCustomBackendUnitTests_sources})
