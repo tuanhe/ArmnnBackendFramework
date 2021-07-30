@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: MIT
 #
 if(CUSTOM_SUPPORT)
-    set(CUSTOM_SDK_ROOT ${SET_YOUR_SDK_DIR})
+    #set(CUSTOM_SDK_ROOT ${SET_YOUR_SDK_DIR})
+    set(CUSTOM_SDK_ROOT ./)
     if(NOT DEFINED CUSTOM_SDK_ROOT)
         message(FATAL_ERROR  "CUSTOM_SDK_ROOT is not set while you enable CUSTOM_SUPPORT")  
     endif()
@@ -11,7 +12,7 @@ if(CUSTOM_SUPPORT)
     set(HEADER_FILE Custom.hpp)
     # Add the support library
     find_path(SUPPORT_LIBRARY_INCLUDE_DIR 
-              NAMES ${HEADER_FILE}
+              ${HEADER_FILE}
               HINTS ${CUSTOM_SDK_ROOT}/include)
     if(NOT CUSTOM_SUPPORT_LIBRARY)
         message(WARNING "Custom support head file (${HEADER_FILE}) not found")
@@ -39,5 +40,5 @@ if(CUSTOM_SUPPORT)
     if(BUILD_UNIT_TESTS)
         list(APPEND armnnUnitTestLibraries armnnCustomBackendUnitTests)
     endif()
-    
+
 endif()
