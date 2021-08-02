@@ -40,6 +40,6 @@ class CustomLayerRegistry
 };
 
 #define CUSTOM_LAYER_REGISTRY(LAYERTYPE) \
-    static CustomLayerRegistry g_Register##LAYERTYPE(LAYERTYPE, Add##LAYERTYPE##Layer);
+    static CustomLayerRegistry g_Register##LAYERTYPE(LAYERTYPE, Add##LAYERTYPE##Layer);
 
 } // namespace armnn
