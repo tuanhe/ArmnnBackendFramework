@@ -48,7 +48,7 @@ std::unique_ptr<ITensorHandle> CustomWorkloadFactory::CreateTensorHandle(const T
 
 std::unique_ptr<ITensorHandle> CustomWorkloadFactory::CreateTensorHandle(const TensorInfo& tensorInfo,
                                                                          DataLayout dataLayout,
-                                                                         bool isMemoryManaged) const
+						                                                 bool isMemoryManaged) const
 {
     IgnoreUnused(dataLayout);
     IgnoreUnused(isMemoryManaged);
@@ -93,6 +93,7 @@ std::unique_ptr<IWorkload> CustomWorkloadFactory::CreateOutput(const OutputQueue
                                        "data input and output differ in byte count.");
     }
 
+    //return MakeWorkloadHelper<CopyMemGenericWorkload>(descriptor, info);
     return std::make_unique<CopyMemGenericWorkload>(descriptor, info);
 }
 
