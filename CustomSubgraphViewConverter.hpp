@@ -12,6 +12,7 @@
 #include <SubgraphView.hpp>
 #include <armnn/BackendOptions.hpp>
 #include "ISubgraphViewConverter.hpp"
+#include "CustomLayerBridge.hpp"
 
 namespace armnn
 {
@@ -29,6 +30,8 @@ class CustomSubgraphViewConverter : public ISubgraphViewConverter
     private:
         void AddInput(uint32_t inputSlotIdx);
         void AddOutput(uint32_t outputSlotIdx);
+        bool AddCustomLayer(Layer& layer);
+        bool RecusedLayer(Layer& layer);
         
     private:
         // ID number for next constructed instance
@@ -38,6 +41,8 @@ class CustomSubgraphViewConverter : public ISubgraphViewConverter
 
         // Original Arm NN sub-graph
         const SubgraphView& m_Subgraph;
+        // converted layers
+        std::vector<LayerGuid> m_ConvertedLayer;
 };
 
 } // namespace armnn

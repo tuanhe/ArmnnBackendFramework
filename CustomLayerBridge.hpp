@@ -13,7 +13,7 @@
 namespace armnn
 {
 
-using LayerFunctionPtr = std::function<bool(Layer*)>;
+using LayerFunctionPtr = std::function<bool(Layer&)>;
 
 class CustomLayerBridge
 {
