@@ -7,6 +7,7 @@
 #include "CustomWorkloadFactory.hpp"
 #include "CustomLayerSupport.hpp"
 #include "CustomPreCompiledObject.hpp"
+#include "CustomSubgraphViewOptimizer.hpp"
 
 #include <backendsCommon/IBackendContext.hpp>
 #include <backendsCommon/IMemoryManager.hpp>
@@ -50,7 +51,7 @@ IBackendInternal::ILayerSupportSharedPtr CustomBackend::GetLayerSupport() const
     return layerSupport;
 }
 
-OptimizationViews CustomBackend::OptimizeSubgraphView(const SubgraphView& subgraph) const
+OptimizationViews CustomBackend::OptimizeSubgraphViewMyCode(const SubgraphView& subgraph) const
 {
     // Mocking a substitution of the whole given sub-graph with a single pre-compiled layer
 
@@ -132,4 +133,22 @@ OptimizationViews CustomBackend::OptimizeSubgraphView(const SubgraphView& subgra
     return optimizationViews;
 }
 
+OptimizationViews CustomBackend::OptimizeSubgraphView(const SubgraphView& subgraph) const
+{
+    SubgraphView optimizedSubgraph = subgraph;
+    OptimizationViews optimizationViews;
+
+    //you can skip the optimzer if you dont need it
+    CustomSubgraphViewOptimizer optimizer;
+    Graph clonedGraph = optimizer.CloneGraph(subgraph);
+    //clonedGraph.Print();
+    optimizedSubgraph = optimizer.OptimizeSubgraph(clonedGraph);
+    
+
+    return optimizationViews;
+}
+
 } // namespace armnn
+
+
+

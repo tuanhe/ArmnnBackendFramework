@@ -29,6 +29,8 @@ public:
     IBackendInternal::ILayerSupportSharedPtr GetLayerSupport() const override;
 
     OptimizationViews OptimizeSubgraphView(const SubgraphView& subgraph) const override;
+    
+    OptimizationViews OptimizeSubgraphViewMyCode(const SubgraphView& subgraph) const;
 };
 
 } // namespace armnn

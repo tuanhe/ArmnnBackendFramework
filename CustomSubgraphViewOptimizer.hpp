@@ -18,12 +18,13 @@ namespace armnn
 class CustomSubgraphViewOptimizer
 {
     public:
+        CustomSubgraphViewOptimizer()  = default;
+        ~CustomSubgraphViewOptimizer() = default;
+        
         SubgraphView OptimizeSubgraph(Graph&);
         Graph CloneGraph(const SubgraphView& originalSubgraphView);
         
     private:
-        CustomSubgraphViewOptimizer()  = default;
-        ~CustomSubgraphViewOptimizer() = default;
         SubgraphView ReinterpretGraphToSubgraph(Graph& graph);
         
     private:

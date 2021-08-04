@@ -18,7 +18,7 @@ namespace armnn
 
 bool IsDataTypeSupported(DataType dataType, Optional<std::string&> reasonIfUnsupported)
 {
-    if (dataType == DataType::Float32)
+    if (dataType == DataType::QAsymmU8)
     {
         return true;
     }
@@ -66,5 +66,106 @@ bool CustomLayerSupport::IsPreCompiledSupported(const armnn::TensorInfo &input,
     ignore_unused(descriptor);
     return IsDataTypeSupported(input.GetDataType(), reasonIfUnsupported);
 }
+
+bool CustomLayerSupport::IsConvolution2dSupported(const TensorInfo& input,
+                                  const TensorInfo& output,
+                                  const Convolution2dDescriptor& descriptor,
+                                  const TensorInfo& weights,
+                                  const Optional<TensorInfo>& biases,
+                                  Optional<std::string&> reasonIfUnsupported) const
+{
+    ignore_unused(input);
+    ignore_unused(output);
+    ignore_unused(descriptor);
+    ignore_unused(weights);
+    ignore_unused(biases);
+    ignore_unused(reasonIfUnsupported);
+    return true;
+}
+
+bool CustomLayerSupport::IsDepthwiseConvolutionSupported(const TensorInfo& input,
+                                         const TensorInfo& output,
+                                         const DepthwiseConvolution2dDescriptor& descriptor,
+                                         const TensorInfo& weights,
+                                         const Optional<TensorInfo>& biases,
+                                         Optional<std::string&> reasonIfUnsupported) const
+{
+    ignore_unused(input);
+    ignore_unused(output);
+    ignore_unused(descriptor);
+    ignore_unused(weights);
+    ignore_unused(biases);
+    ignore_unused(reasonIfUnsupported);
+    return true;
+}
+
+bool CustomLayerSupport::IsTransposeConvolution2dSupported(const TensorInfo& input,
+                                           const TensorInfo& output,
+                                           const TransposeConvolution2dDescriptor& descriptor,
+                                           const TensorInfo& weights,
+                                           const Optional<TensorInfo>& biases,
+                                           Optional<std::string&> reasonIfUnsupported) const
+{
+    ignore_unused(input);
+    ignore_unused(output);
+    ignore_unused(descriptor);
+    ignore_unused(weights);
+    ignore_unused(biases);
+    ignore_unused(reasonIfUnsupported);
+    return true;
+}
+
+bool CustomLayerSupport::IsFullyConnectedSupported(const TensorInfo& input,
+                                   const TensorInfo& output,
+                                   const TensorInfo& weights,
+                                   const TensorInfo& biases,
+                                   const FullyConnectedDescriptor& descriptor,
+                                   Optional<std::string&> reasonIfUnsupported) const
+{
+    ignore_unused(input);
+    ignore_unused(output);
+    ignore_unused(descriptor);
+    ignore_unused(weights);
+    ignore_unused(biases);
+    ignore_unused(reasonIfUnsupported);
+    return true;
+}
+
+bool CustomLayerSupport::IsPooling2dSupported(const TensorInfo& input,
+                              const TensorInfo& output,
+                              const Pooling2dDescriptor& descriptor,
+                              Optional<std::string&> reasonIfUnsupported) const
+{
+    ignore_unused(input);
+    ignore_unused(output);
+    ignore_unused(descriptor);
+    ignore_unused(reasonIfUnsupported);
+    return true;
+}
+
+bool CustomLayerSupport::IsReshapeSupported(const TensorInfo& input,
+                            const TensorInfo& output,
+                            const ReshapeDescriptor& descriptor,
+                            Optional<std::string&> reasonIfUnsupported) const
+{
+    ignore_unused(input);
+    ignore_unused(output);
+    ignore_unused(descriptor);
+    ignore_unused(reasonIfUnsupported);
+    return true;
+}
+
+bool CustomLayerSupport::IsSoftmaxSupported(const TensorInfo& input,
+                            const TensorInfo& output,
+                            const SoftmaxDescriptor& descriptor,
+                            Optional<std::string&> reasonIfUnsupported) const
+{
+    ignore_unused(input);
+    ignore_unused(output);
+    ignore_unused(descriptor);
+    ignore_unused(reasonIfUnsupported);
+    return true;
+}
+
 
 } // namespace armnn
