@@ -8,6 +8,7 @@
 #include "CustomLayerSupport.hpp"
 #include "CustomPreCompiledObject.hpp"
 #include "CustomSubgraphViewOptimizer.hpp"
+#include "CustomSubgraphViewConverter.hpp"
 
 #include <backendsCommon/IBackendContext.hpp>
 #include <backendsCommon/IMemoryManager.hpp>
@@ -51,7 +52,7 @@ IBackendInternal::ILayerSupportSharedPtr CustomBackend::GetLayerSupport() const
     return layerSupport;
 }
 
-OptimizationViews CustomBackend::OptimizeSubgraphViewMyCode(const SubgraphView& subgraph) const
+OptimizationViews CustomBackend::OptimizeSubgraphView(const SubgraphView& subgraph) const
 {
     // Mocking a substitution of the whole given sub-graph with a single pre-compiled layer
 
@@ -133,7 +134,8 @@ OptimizationViews CustomBackend::OptimizeSubgraphViewMyCode(const SubgraphView& 
     return optimizationViews;
 }
 
-OptimizationViews CustomBackend::OptimizeSubgraphView(const SubgraphView& subgraph) const
+OptimizationViews CustomBackend::OptimizeSubgraphView(const SubgraphView& subgraph,
+                                                      const ModelOptions& modelOptions) const
 {
     SubgraphView optimizedSubgraph = subgraph;
     OptimizationViews optimizationViews;
@@ -143,9 +145,66 @@ OptimizationViews CustomBackend::OptimizeSubgraphView(const SubgraphView& subgra
     Graph clonedGraph = optimizer.CloneGraph(subgraph);
     //clonedGraph.Print();
     optimizedSubgraph = optimizer.OptimizeSubgraph(clonedGraph);
-    
 
+    std::vector<CompiledBlobPtr> compiledNetworks;
+    
+    try
+    {
+        // Attempt to convert and compile the sub-graph
+        compiledNetworks = CustomSubgraphViewConverter(optimizedSubgraph, modelOptions).CompileNetwork();
+    }
+    catch (std::exception&)
+    {
+        // Failed to compile the network
+        // compiledNetworks will be empty and the condition below will apply
+    }
+
+    if (compiledNetworks.empty())
+    {
+        // The compiler returned an empty list of compiled objects
+        optimizationViews.AddFailedSubgraph(SubgraphView(subgraph));
+        goto ret;
+    }
+
+    if (!FrozenLayer(optimizationViews, subgraph, compiledNetworks[0]))
+    {
+        ARMNN_LOG(error) << "Froze layer to precompiled layer failed";
+        goto ret;
+    }
+
+    ret:
     return optimizationViews;
+}
+
+bool CustomBackend::FrozenLayer(OptimizationViews& optimizationViews,
+                                const SubgraphView& subgraph,
+                                CompiledBlobPtr& compiledBlob)  const
+{
+    PreCompiledLayer* preCompiledLayer = optimizationViews.GetGraph().AddLayer<PreCompiledLayer>(PreCompiledDescriptor(
+                                                                                          subgraph.GetNumInputSlots(),
+                                                                                          subgraph.GetNumOutputSlots()),
+                                                                                          "pre-compiled");
+    if (!preCompiledLayer)
+    {
+        optimizationViews.AddFailedSubgraph(SubgraphView(subgraph));
+        return false;
+    }
+    
+    // Optimization applied, copy the output tensor infos from the sub-graph
+    for (uint32_t i = 0; i < subgraph.GetNumOutputSlots(); i++)
+    {
+        preCompiledLayer->GetOutputSlot(i).SetTensorInfo(subgraph.GetOutputSlot(i)->GetTensorInfo());
+    }
+
+    // Set the backend id to the pre-compiled layer, so that it will be executed on this backend
+    preCompiledLayer->SetBackendId(GetIdStatic());
+
+    // Assign the mock pre-compiled object to the layer
+    preCompiledLayer->SetPreCompiledObject(std::move(compiledBlob));
+
+    // Add the pair sub-graph <-> pre-compiled layer to the list of substitutions
+    optimizationViews.AddSubstitution({ SubgraphView(subgraph), SubgraphView(preCompiledLayer) });
+    return true;
 }
 
 } // namespace armnn

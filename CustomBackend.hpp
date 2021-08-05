@@ -30,7 +30,13 @@ public:
 
     OptimizationViews OptimizeSubgraphView(const SubgraphView& subgraph) const override;
     
-    OptimizationViews OptimizeSubgraphViewMyCode(const SubgraphView& subgraph) const;
+    OptimizationViews OptimizeSubgraphView(const SubgraphView& subgraph,
+                                           const ModelOptions& modelOptions) const override;
+
+private:
+    bool FrozenLayer(OptimizationViews& optimizationViews,
+                     const SubgraphView& subgraph,
+                     CompiledBlobPtr& compiledBlob)  const;
 };
 
 } // namespace armnn
