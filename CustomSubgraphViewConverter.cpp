@@ -16,6 +16,7 @@ CustomSubgraphViewConverter::CustomSubgraphViewConverter(const SubgraphView& sub
     , m_Subgraph(subgraph)
 {
     armnn::IgnoreUnused(modelOptions);
+    ConstructCustomNetwork();
 }
 
 void CustomSubgraphViewConverter::ResetNextInstanceId()
@@ -30,13 +31,13 @@ void CustomSubgraphViewConverter::AddInput(uint32_t inputSlotIdx)
     ARMNN_ASSERT(connectedSlot != nullptr);
 
     Layer& inputLayer = connectedSlot->GetOwningLayer();
+    ARMNN_LOG(info) << "Graph input layer : " << inputLayer.GetNameStr();
     
     if(!AddCustomLayer(inputLayer))
     {
         throw armnn::BackendUnavailableException("Convert input layer failed");
     }
 
-    ARMNN_LOG(info) << "Graph input layer : " << inputLayer.GetNameStr();
 
     // Add input to the Ethos-N network
     //ethosn_lib::TensorInfo CustomTensorInfo = BuildCustomTensorInfo(connectedSlot->GetTensorInfo(), DataLayout::NHWC);
@@ -108,10 +109,8 @@ bool CustomSubgraphViewConverter::AddCustomLayer(Layer& layer)
     return true; 
 }
 
-std::vector<CompiledBlobPtr> CustomSubgraphViewConverter::CompileNetwork()
+bool CustomSubgraphViewConverter::ConstructCustomNetwork()
 {
-    std::vector<CompiledBlobPtr> compiledBlobs;
-    
     // Add inputs
     for (uint32_t inputSlotIdx = 0; inputSlotIdx < m_Subgraph.GetNumInputSlots(); ++inputSlotIdx)
     {
@@ -123,6 +122,15 @@ std::vector<CompiledBlobPtr> CustomSubgraphViewConverter::CompileNetwork()
     {
         AddOutput(outputSlotIdx);
     }
+
+    return true;
+}
+
+std::vector<CompiledBlobPtr> CustomSubgraphViewConverter::CompileNetwork()
+{
+    std::vector<CompiledBlobPtr> compiledBlobs;
+    
+
     return compiledBlobs;
 }
 

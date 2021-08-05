@@ -32,6 +32,7 @@ class CustomSubgraphViewConverter : public ISubgraphViewConverter
         void AddOutput(uint32_t outputSlotIdx);
         bool AddCustomLayer(Layer& layer);
         bool RecusedLayer(Layer& layer);
+        bool ConstructCustomNetwork();
         
     private:
         // ID number for next constructed instance

@@ -143,7 +143,9 @@ OptimizationViews CustomBackend::OptimizeSubgraphView(const SubgraphView& subgra
     //you can skip the optimzer if you dont need it
     CustomSubgraphViewOptimizer optimizer;
     Graph clonedGraph = optimizer.CloneGraph(subgraph);
-    //clonedGraph.Print();
+    
+    //print the graph to confirm it
+    clonedGraph.Print();
     optimizedSubgraph = optimizer.OptimizeSubgraph(clonedGraph);
 
     std::vector<CompiledBlobPtr> compiledNetworks;
@@ -153,10 +155,11 @@ OptimizationViews CustomBackend::OptimizeSubgraphView(const SubgraphView& subgra
         // Attempt to convert and compile the sub-graph
         compiledNetworks = CustomSubgraphViewConverter(optimizedSubgraph, modelOptions).CompileNetwork();
     }
-    catch (std::exception&)
+    catch (std::exception& e)
     {
         // Failed to compile the network
         // compiledNetworks will be empty and the condition below will apply
+        ARMNN_LOG(fatal) << e.what();
     }
 
     if (compiledNetworks.empty())
