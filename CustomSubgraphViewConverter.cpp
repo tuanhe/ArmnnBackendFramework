@@ -99,7 +99,7 @@ bool CustomSubgraphViewConverter::AddCustomLayer(Layer& layer)
         throw armnn::UnimplementedException(errorMessage.str());
     }
 
-    if(!layerFunction(layer))
+    if(!layerFunction(layer, m_CustomDefined))
     {
         ARMNN_LOG(fatal) << "Layer " << layer.GetNameStr() << " convert failed";
         return false;

@@ -44,6 +44,8 @@ class CustomSubgraphViewConverter : public ISubgraphViewConverter
         const SubgraphView& m_Subgraph;
         // converted layers
         std::vector<LayerGuid> m_ConvertedLayer;
+        //custom backend variable info
+        void* m_CustomDefined;
 };
 
 } // namespace armnn

@@ -14,6 +14,7 @@ target_include_directories(armnnCustomBackend PRIVATE ${PROJECT_SOURCE_DIR}/src/
 target_include_directories(armnnCustomBackend PRIVATE ${PROJECT_SOURCE_DIR}/profiling/common/include)
 
 add_subdirectory(workloads)
+add_subdirectory(layers)
 
 if(BUILD_UNIT_TESTS)
     add_subdirectory(test)
