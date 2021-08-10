@@ -54,7 +54,7 @@ void CustomSubgraphViewConverter::AddOutput(uint32_t outputSlotIdx)
 
     if(!RecusedLayer(outputLayer))
     {
-        throw armnn::BackendUnavailableException("Convert output layer failed");
+        throw armnn::BackendUnavailableException("Convert layer failed");
     }
 
     // Get the Ethos-N operand that should connect to this output
