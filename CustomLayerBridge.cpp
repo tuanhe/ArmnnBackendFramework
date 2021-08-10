@@ -8,14 +8,6 @@
 namespace armnn
 {
 
-CustomLayerBridge::CustomLayerBridge()
-{
-}
-
-CustomLayerBridge::~CustomLayerBridge()
-{
-}
-
 CustomLayerBridge& CustomLayerBridge::GetBridge()
 {
     static CustomLayerBridge bridge;
@@ -32,8 +24,6 @@ LayerFunctionPtr CustomLayerBridge::GetLayerFunction(LayerType type)
 
 void CustomLayerBridge::RegisterLayer(LayerType type, LayerFunctionPtr fn)
 {
-    std::cout << "Register " << GetLayerTypeAsCString(type);
-    //printf("Register %s" , (GetLayerTypeAsCString(type)).c_str());
     m_LayerMap.insert(std::pair<LayerType, LayerFunctionPtr>(type, fn));
 }
 

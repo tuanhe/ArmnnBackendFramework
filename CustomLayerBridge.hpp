@@ -25,10 +25,8 @@ class CustomLayerBridge
         static CustomLayerBridge& GetBridge();
 
     private:
-        //CustomLayerBridge()  = default;
-        //~CustomLayerBridge() = default;
-        CustomLayerBridge();
-        ~CustomLayerBridge();
+        CustomLayerBridge()  = default;
+        ~CustomLayerBridge() = default;
 
     private:
         std::map<LayerType,LayerFunctionPtr> m_LayerMap;
@@ -39,12 +37,11 @@ class CustomLayerRegistry
     public:
         CustomLayerRegistry(LayerType type, LayerFunctionPtr fn)
         {
-             std::cout << "Register " << GetLayerTypeAsCString(type);
             CustomLayerBridge::GetBridge().RegisterLayer(type, fn);
         }
 };
 
 #define CUSTOM_LAYER_REGISTRY(LAYERTYPE) \
-    static CustomLayerRegistry g_Register##LAYERTYPE(LayerType::LAYERTYPE, Add##LAYERTYPE##Layer);
+    static CustomLayerRegistry g_Register##LAYERTYPE(LayerType::LAYERTYPE, LAYERTYPE);
 
 } // namespace armnn

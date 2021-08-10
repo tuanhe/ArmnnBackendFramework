@@ -9,7 +9,7 @@
 namespace armnn
 {
 
-bool AddReshapeLayer(Layer& layer, CustomDefinedPtr obj)
+bool Reshape(Layer& layer, CustomDefinedPtr obj)
 {
     ARMNN_LOG(info) << __FUNCTION__ << " : " << __LINE__ << " : " << layer.GetNameStr();
     armnn::IgnoreUnused(obj);

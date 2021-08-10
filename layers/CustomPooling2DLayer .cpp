@@ -9,7 +9,7 @@
 namespace armnn
 {
 
-bool AddPooling2dLayer(Layer& layer, CustomDefinedPtr obj)
+bool Pooling2d(Layer& layer, CustomDefinedPtr obj)
 {
     ARMNN_LOG(info) << __FUNCTION__ << " : " << __LINE__ << " : " << layer.GetNameStr();
     armnn::IgnoreUnused(obj);

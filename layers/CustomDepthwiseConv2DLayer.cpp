@@ -9,7 +9,7 @@
 namespace armnn
 {
 
-bool AddDepthwiseConvolution2dLayer(Layer& layer, CustomDefinedPtr obj)
+bool DepthwiseConvolution2d(Layer& layer, CustomDefinedPtr obj)
 {
     ARMNN_LOG(info) << __FUNCTION__ << " : " << __LINE__ << " : " << layer.GetNameStr();
     armnn::IgnoreUnused(obj);

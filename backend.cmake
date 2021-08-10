@@ -35,6 +35,7 @@ if(CUSTOM_SUPPORT)
     # Build the backend
     add_subdirectory(${CMAKE_CURRENT_LIST_DIR})
     list(APPEND armnnLibraries armnnCustomBackend)
+    list(APPEND armnnLibraries armnnCustomBackendLayers)
     list(APPEND armnnLibraries armnnCustomBackendWorkloads)
 
     if(BUILD_UNIT_TESTS)

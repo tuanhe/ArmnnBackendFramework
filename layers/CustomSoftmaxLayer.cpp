@@ -9,7 +9,7 @@
 namespace armnn
 {
 
-bool AddSoftmaxLayer(Layer& layer, CustomDefinedPtr obj)
+bool Softmax(Layer& layer, CustomDefinedPtr obj)
 {
     ARMNN_LOG(info) << __FUNCTION__ << " : " << __LINE__ << " : " << layer.GetNameStr();
     armnn::IgnoreUnused(obj);
