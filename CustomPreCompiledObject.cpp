@@ -10,6 +10,22 @@
 namespace armnn
 {
 
+bool CustomPreCompiledObject::CompileGraph(void*)
+{
+    return true;
+}
+
+bool CustomPreCompiledObject::Inference()
+{
+    return true;
+}
+
+bool CustomPreCompiledObject::ReleaseMemory()
+{
+    return true;
+}
+
+
 void CustomPreCompiledObject::DoElementwiseAddition(const float* inputData0,
                                                   const float* inputData1,
                                                   float* outputData,

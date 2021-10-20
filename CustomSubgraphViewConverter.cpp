@@ -4,6 +4,7 @@
 //
 
 #include "CustomSubgraphViewConverter.hpp"
+#include "CustomPreCompiledObject.hpp"
 
 namespace armnn
 {
@@ -126,10 +127,23 @@ bool CustomSubgraphViewConverter::ConstructCustomNetwork()
     return true;
 }
 
+namespace
+{
+template <typename T>
+void DeleteAsType(const void* const blob)
+{
+    delete static_cast<const T*>(blob);
+}
+}    // namespace
+
 std::vector<CompiledBlobPtr> CustomSubgraphViewConverter::CompileNetwork()
 {
+
+    auto preCompiledObject = std::make_unique<CustomPreCompiledObject>();
+
     std::vector<CompiledBlobPtr> compiledBlobs;
-    
+    // Convert the EthosNPreCompiledObject into a "blob" (void) object and attach the custom blob deleter
+    compiledBlobs.emplace_back(preCompiledObject.release(), DeleteAsType<CustomPreCompiledObject>);
 
     return compiledBlobs;
 }

@@ -16,6 +16,9 @@ public:
     CustomPreCompiledObject() = default;
     ~CustomPreCompiledObject() = default;
 
+    bool CompileGraph(void*);
+    bool Inference();
+    bool ReleaseMemory();
     // Simple example method to perform an element-wise addition to the given data (pretending that
     // the backend performs it better than the default implementation)
     void DoElementwiseAddition(const float* inputData0,
