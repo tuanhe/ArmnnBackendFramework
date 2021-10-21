@@ -13,4 +13,5 @@ You can clone it and place it to the armn/src/backends/ for your project without
 More helpful info can be found in the document([Click here](https://developer.arm.com/solutions/machine-learning-on-arm/developer-material/how-to-guides/build-arm-nn-custom-backend-plugins/single-page))
 
 The Chinese tips can be found by [click here](https://zhuanlan.zhihu.com/p/424127640)
+
 中文的开发介绍可以点击[此处](https://zhuanlan.zhihu.com/p/424127640)查看
