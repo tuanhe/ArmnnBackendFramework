@@ -24,6 +24,9 @@ public:
 
 private:
     const CustomPreCompiledObject* m_PreCompiledObject;
+
+    std::vector<Buffer> m_InputBuffers;
+    std::vector<Buffer> m_OutputBuffers;
 };
 
 } // namespace armnn

@@ -141,6 +141,9 @@ std::vector<CompiledBlobPtr> CustomSubgraphViewConverter::CompileNetwork()
 
     auto preCompiledObject = std::make_unique<CustomPreCompiledObject>();
 
+    preCompiledObject->SetDebugName("Debug Name");
+    preCompiledObject->PreInferenceStage(m_CustomDefined);
+
     std::vector<CompiledBlobPtr> compiledBlobs;
     // Convert the EthosNPreCompiledObject into a "blob" (void) object and attach the custom blob deleter
     compiledBlobs.emplace_back(preCompiledObject.release(), DeleteAsType<CustomPreCompiledObject>);

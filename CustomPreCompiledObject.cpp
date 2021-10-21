@@ -10,17 +10,21 @@
 namespace armnn
 {
 
-bool CustomPreCompiledObject::CompileGraph(void*)
+bool CustomPreCompiledObject::PreInferenceStage(void*)
 {
     return true;
 }
 
-bool CustomPreCompiledObject::Inference()
+bool CustomPreCompiledObject::Inference(std::vector<Buffer>& input, std::vector<Buffer>& output) const
 {
+    DoElementwiseAddition( reinterpret_cast<const float*> (input[0].data),
+                           reinterpret_cast<const float*> (input[1].data),
+                           reinterpret_cast<float*> (output[0].data),
+                           input[0].size);
     return true;
 }
 
-bool CustomPreCompiledObject::ReleaseMemory()
+bool CustomPreCompiledObject::PostInferenceStage()
 {
     return true;
 }
@@ -44,5 +48,16 @@ void CustomPreCompiledObject::DoElementwiseAddition(const float* inputData0,
         outputData[i] = inputData0[i] + inputData1[i];
     }
 }
+
+void CustomPreCompiledObject::SetDebugName(const std::string name)
+{
+    m_Name = name;
+}
+
+std::string CustomPreCompiledObject::GetDebugName() const
+{
+    return m_Name;
+}
+
 
 } // namespace armnn
